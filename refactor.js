@@ -243,7 +243,7 @@ function updateMapWithEndPoint(view, pointCoordinates, data) {
 }
 function showRecentLocation(view, pointCoordinates, currentIndex, data, vehicleInfor) {
 
-    require(["esri/Graphic", "esri/geometry/Point", "esri/symbols/SimpleMarkerSymbol"], function (Graphic, Point, SimpleMarkerSymbol) {
+    require(["esri/Graphic", "esri/geometry/Point", "esri/symbols/PictureMarkerSymbol"], function (Graphic, Point, PictureMarkerSymbol) {
         const startaddress = data.filter((item) => {
             return item['Lat'] == pointCoordinates[currentIndex][1];
         })
@@ -263,11 +263,14 @@ function showRecentLocation(view, pointCoordinates, currentIndex, data, vehicleI
             longitude: pointCoordinates[currentIndex][0],
             latitude: pointCoordinates[currentIndex][1]
         });
-        const pointSymbol = new SimpleMarkerSymbol({
-            style: "circle",
-            color: "orange",
-            size: "20px",
-            angle: angle
+        const pointSymbol = new PictureMarkerSymbol({
+            // style: "circle",
+            // color: "orange",
+            // size: "20px",
+            url: "localxe.jpg", // URL to the house icon image
+            width: "50px",
+            height: "50px"
+            // angle: angle
         });
 
         const startpopupTemplate = {
