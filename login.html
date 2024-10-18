@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://js.arcgis.com/4.28/"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css">
     <style>
         .divider:after,
         .divider:before {
@@ -30,30 +32,31 @@
 <body>
     <section class="vh-100">
         <div class="container-fluid h-custom">
+            <div class="map-container" id="mapDiv"></div>
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-6 col-xl-5">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                         class="img-fluid" alt="Sample image">
                 </div>
-                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" class="login-container">
                     <!-- Thêm thuộc tính autocomplete="off" ở đây -->
-                    <form autocomplete="off">
+                    <form id =" formlogin" autocomplete="off">
                         <div class="divider d-flex align-items-center my-4">
-                            <p class="text-center fw-bold mx-3 mb-0">Login</p>
+                            <p class="text-center fw-bold mx-3 mb-0">Phần Mềm Quản Lý</p>
                         </div>
 
                         <!-- Email input -->
                         <div data-mdb-input-init class="form-outline mb-4">
-                            <label class="form-label" for="form3Example3">Username</label>
-                            <input type="text" id="form3Example3" class="form-control form-control-lg"
+                            <label class="form-label" for="username">Username</label>
+                            <input type="text" id="username" class="form-control form-control-lg"
                                 placeholder="Enter a valid email address" autocomplete="off" value="admin" />
 
                         </div>
 
                         <!-- Password input -->
                         <div data-mdb-input-init class="form-outline mb-3">
-                            <label class="form-label" for="form3Example4">Password</label>
-                            <input type="password" id="form3Example4" class="form-control form-control-lg"
+                            <label class="form-label" for="password">Password</label>
+                            <input type="password" id="password" class="form-control form-control-lg"
                                 placeholder="Enter password" autocomplete="off" value="admin" />
 
                         </div>
@@ -70,7 +73,7 @@
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
-                            <button type="button" data-mdb-button-init data-mdb-ripple-init
+                            <button type="submit" data-mdb-button-init data-mdb-ripple-init
                                 class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
                                 id='login'>Login</button>
                         </div>
@@ -89,10 +92,31 @@
     </section>
 </body>
 <script>
-    var loginBtn = document.getElementById('login');
-    loginBtn.onclick = () => {
-        window.location.href = 'index.html'
-    }
+    document.getElementById('formlogin').addEventListener('submit', function(event) {
+        event.preventDefault();           
+        const username = event.target.username.value;
+        const password = event.target.password.value;
+            if (username === 'admin' && password === 'admin') {
+                isUserLoggedIn = true;
+                window.location.href = 'qlgt.html';
+            } else {
+                alert('Tên người dùng hoặc mật khẩu không đúng!');
+            }        
+    });   
+
+    // Add this code to create the map
+    require(["esri/Map", "esri/views/MapView"], function (Map, MapView) {
+        var map = new Map({
+            basemap: "streets-navigation-vector" 
+        });
+
+        var view = new MapView({
+            container: "mapDiv",
+            map: map,
+            zoom: 12,
+            center: [106.859718, 10.9199], 
+        });
+    });
 </script>
 
 </html>
